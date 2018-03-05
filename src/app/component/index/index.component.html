@@ -1,0 +1,44 @@
+<div class="container" *ngIf="display;else child">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>Poll List</h1>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <input type="text" class="form-control" placeholder="Search Poll...">
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row">
+        <div class="col-sm-6">
+          <button type="button" class="btn btn-primary" (click)="createPoll()">
+            <span>
+              <i class="fa fa-plus" aria-hidden="true"></i> New Poll</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="col-sm-8">
+      <ul class="list-group">
+        <a class="list-group-item" *ngFor="let poll of polls" (click)="getPollById(poll.pollId)">{{ poll.poll }}</a>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #child>
+  <h1>Poll</h1>
+
+  <app-index-child (displayFlag)="receiveFlag($event)" [pollId]="pollId"></app-index-child>
+
+  <!-- <router-outlet></router-outlet> -->
+</ng-template>

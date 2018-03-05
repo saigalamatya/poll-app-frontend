@@ -1,0 +1,42 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-sm btn-default" (click)="index()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Poll List
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="jumbotron">
+        <p>
+          <!-- Poll goes here-->
+          <!-- {{ poll.poll }} -->
+          {{ poll }}
+        </p>
+      </div>
+
+      <div class="row">
+        <h2>Please select any of the option</h2>
+        <div class="col-sm-8" *ngFor="let option of options">
+          <label class="checkbox-inline">
+            <input type="radio" name="option" (click)="selectOption(option)"> {{ option }}
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8">
+          <button type="button" class="btn btn-sm btn-success">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i> Vote
+          </button>
+        </div>
+      </div>
+
+      
+
+    </div>
+  </div>
+</div>

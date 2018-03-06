@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { PollService } from '../../../services/poll.service';
+import { VoteModel } from '../../../models/vote-model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +14,9 @@ export class IndexChildComponent implements OnInit, OnChanges {
   options: Array<any>;
   poll: any;
   flag: boolean = true;
+  voteCount: number = 0;
+
+  voteOption: String;
 
   @Output() displayFlag: EventEmitter<any> = new EventEmitter();
 
@@ -20,13 +24,39 @@ export class IndexChildComponent implements OnInit, OnChanges {
 
   selectOption(option: any) {
     console.log("Selected option", option);
+    this.voteOption = option;
   }
 
   index() {
     console.log("Index Page");
-    this.displayFlag.emit(this.flag);    
+    this.displayFlag.emit(this.flag);
     // this.display = true;
     this.router.navigateByUrl('/index');
+  }
+
+  castVote(votePollId) {
+
+    this.voteCount++;
+    // this.votePollId = votePollId;
+    // this.voteOption = voteOption;
+    // console.log(this.votePollId);
+    console.log(this.voteOption, votePollId);
+
+    let vote = new VoteModel(votePollId, this.voteOption);
+
+    this.pollService.insertVote(vote)
+      .subscribe(
+        vote => {
+          console.log("Votes", vote);
+          this.voteOption = vote.obj.option
+          console.log("You voted for ", this.voteOption);
+        },
+        err => {
+          console.log("Error inserting vote!!!");
+        }
+
+      );
+
   }
 
 
@@ -46,7 +76,7 @@ export class IndexChildComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    
+
   }
 
 }

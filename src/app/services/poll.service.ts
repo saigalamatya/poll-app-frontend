@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { PollModel } from '../models/poll-model';
+import { VoteModel } from '../models/vote-model';
 
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
@@ -50,6 +51,19 @@ export class PollService {
     return this.http.get("http://localhost:5555/api/polls/" + pollId)
       .map((res: Response) => res.json())
       .catch((err: Response) => Observable.throw(err.json()));
+  }
+
+  insertVote(voteModel: VoteModel) {
+    console.log("Inside insert vote", voteModel);
+    
+    let headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post("http://localhost:5555/api/votes", voteModel, { headers: headers })
+      .map((res: Response) => res.json()      
+      )
+      .catch((err) => {
+        throw(err.json());
+      })
+
   }
 
 }

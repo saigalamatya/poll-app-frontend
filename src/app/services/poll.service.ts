@@ -62,8 +62,17 @@ export class PollService {
       )
       .catch((err) => {
         throw(err.json());
-      })
+      });
+  }
 
+  countVote(pollId) {
+    console.log("Inside count vote", pollId);
+    
+    return this.http.get("http://localhost:5555/api/votes/count/" + pollId)
+      .map((res: Response) => res.json())
+      .catch((err) => {
+        throw(err.json());
+      });
   }
 
 }

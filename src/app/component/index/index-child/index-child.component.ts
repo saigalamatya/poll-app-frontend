@@ -57,10 +57,26 @@ export class IndexChildComponent implements OnInit, OnChanges {
 
       );
 
+      this.pollService.countVote(this.pollId)
+        .subscribe(
+            id => { 
+              console.log("Total votes casted for the poll is: ", id.result);
+            }
+        );
+
   }
 
 
   ngOnInit() {
+
+    this.pollService.countVote(this.pollId)
+    .subscribe(
+        id => { 
+          // console.log("Total votes casted for the poll is: ", id.result);
+          this.voteCount = id.result;
+        }
+    );
+
     this.pollService.getPollById(this.pollId)
       .subscribe(
         // data => console.log(data.obj[0]._id, "get poll by id")

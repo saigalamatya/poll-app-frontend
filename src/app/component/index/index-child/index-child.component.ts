@@ -3,6 +3,8 @@ import { PollService } from '../../../services/poll.service';
 import { VoteModel } from '../../../models/vote-model';
 import { Router } from '@angular/router';
 
+import { Chart } from 'chart.js';
+
 @Component({
   selector: 'app-index-child',
   templateUrl: './index-child.component.html',
@@ -15,6 +17,10 @@ export class IndexChildComponent implements OnInit, OnChanges {
   poll: any;
   flag: boolean = true;
   voteCount: number = 0;
+
+  chart = [];
+  chartArray = [];
+  chartCount = [];
 
   voteOption: String;
 
@@ -57,21 +63,64 @@ export class IndexChildComponent implements OnInit, OnChanges {
 
       );
 
-      this.pollService.countVote(this.pollId)
-        .subscribe(
-            id => { 
-              console.log("Total votes casted for the poll is: ", id.result);
-            }
-        );
+      // this.pollService.totalVoteCount(this.pollId)
+      //   .subscribe(
+      //       id => { 
+      //         console.log("Total votes casted for the poll is: ", id.result);
+      //       }
+      //   );
+
+        // this.displayChart();
 
   }
 
+  // displayChart() {
+
+    // this.pollService.getPollById(this.pollId)
+    //   .subscribe(
+    //     // data => console.log(data.obj[0]._id, "get poll by id")
+    //     poll => {
+    //       console.log("Get poll by id", poll.obj[0].options)
+    //       this.options = poll.obj[0].options[0].options;
+    //       this.poll = poll.obj[0].poll;
+    //       console.log("Polls:", this.poll);
+    //       console.log("Options", this.options);
+    //     }
+    //   );
+
+  //     this.chart = new Chart('canvas', {
+  //       type: 'line',
+  //       data: {
+  //         labels: this.chartDisplay,
+  //         datasets: [
+  //           {
+  //             data: 
+  //           }
+  //         ]
+  //       },
+  //       options: {
+  //         legend: {
+  //           display: false
+  //         },
+  //         scales: {
+  //           xAxes: [{
+  //             display:true
+  //           }],
+  //           yAxes: [{
+  //             display: true
+  //           }]
+  //         }
+  //       }
+  //     });
+
+  // }
 
   ngOnInit() {
 
-    this.pollService.countVote(this.pollId)
+    this.pollService.totalVoteCount(this.pollId)
     .subscribe(
         id => { 
+          // console.log("id", id.result);
           // console.log("Total votes casted for the poll is: ", id.result);
           this.voteCount = id.result;
         }
@@ -87,7 +136,75 @@ export class IndexChildComponent implements OnInit, OnChanges {
           console.log("Polls:", this.poll);
           console.log("Options", this.options);
         }
-      );
+    );
+
+    this.pollService.countVote(this.pollId)
+      .subscribe(
+        res => {
+          let name = res['count'].map(res => res._id);
+          let count = res['count'].map(res =>res.count)
+          console.log("name", name);
+          console.log("count", count);
+
+          for(let n of name) {
+            this.chartArray.push(n);
+            // console.log("n", n);
+          }
+
+          for(let c of count) {
+            this.chartCount.push(c);
+            // console.log("c", c);
+          }
+
+          // console.log(this.chartCount);
+          // console.log(this.chartArray);
+
+          // this.chartArray.push(name);
+          // // console.log("Chart array", this.chartArray);
+
+          // this.chartCount.push(count);
+          // // console.log("Chart count", this.chartCount);
+          
+          var ctx = document.getElementById("myChart");
+          this.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: this.chartArray,
+              datasets: [
+                {
+                  data: this.chartCount,
+                  borderColor: "#3cba9f",
+                  fill: false
+                },
+                // {
+                //   data: this.chartCount,
+                //   borderColor: "#ffcc00",
+                //   fill: false
+                // }
+              ]
+            },
+            options: {
+              legend: {
+                display: false
+              },
+              scales: {
+                xAxes: [{
+                  display: true
+                }],
+                yAxes: [{
+                  display: true
+                }],
+              }
+            }
+          });
+          console.log(this.chart);
+          
+        }
+        // data => console.log("data", data)  
+            
+    );
+
+       
 
   }
 

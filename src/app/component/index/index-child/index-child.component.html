@@ -36,7 +36,7 @@
       </div>
 
       <hr />
-      
+
       <div class="row">
         <div class="col-sm-8">
           <p>{{ voteCount }} votes casted!</p>
@@ -49,5 +49,9 @@
 </div>
 
 <div *ngIf="chart">
-<canvas id="myChart" width="250" height="100">{{ chart }}</canvas>
+  <div class="row center-block">
+    <div class="col-sm-8">
+      <canvas id="myChart" width="200" height="75">{{ chart }}</canvas>
+    </div>
+  </div>
 </div>

@@ -142,7 +142,7 @@ export class IndexChildComponent implements OnInit, OnChanges {
       .subscribe(
         res => {
           let name = res['count'].map(res => res._id);
-          let count = res['count'].map(res =>res.count)
+          let count = res['count'].map(res => res.count);
           console.log("name", name);
           console.log("count", count);
 
@@ -167,7 +167,7 @@ export class IndexChildComponent implements OnInit, OnChanges {
           
           var ctx = document.getElementById("myChart");
           this.chart = new Chart(ctx, {
-            type: 'line',
+            type: 'polarArea',
             data: {
               labels: this.chartArray,
               datasets: [
@@ -185,7 +185,7 @@ export class IndexChildComponent implements OnInit, OnChanges {
             },
             options: {
               legend: {
-                display: false
+                display: true
               },
               scales: {
                 xAxes: [{
@@ -197,6 +197,8 @@ export class IndexChildComponent implements OnInit, OnChanges {
               }
             }
           });
+          console.log("Chart Count", this.chartCount);
+          console.log("Chart Array", this.chartArray);
           console.log(this.chart);
           
         }

@@ -11,8 +11,10 @@ import { IndexComponent } from './component/index/index.component';
 import { CreatePollComponent } from './component/create-poll/create-poll.component';
 
 import { PollService } from './services/poll.service';
+import { SignInService } from './component/sign-in/sign-in.service';
 import { PollListComponent } from './component/poll-list/poll-list.component';
 import { IndexChildComponent } from './component/index/index-child/index-child.component';
+import { SignInComponent } from './component/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { IndexChildComponent } from './component/index/index-child/index-child.c
     IndexComponent,
     CreatePollComponent,
     PollListComponent,
-    IndexChildComponent
+    IndexChildComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,7 @@ import { IndexChildComponent } from './component/index/index-child/index-child.c
     HttpModule,
     routing
   ],
-  providers: [PollService],
+  providers: [PollService, SignInService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

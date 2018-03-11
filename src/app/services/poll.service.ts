@@ -31,8 +31,9 @@ export class PollService {
 
     return this.http.get("http://localhost:5555/api/polls")
       .map((res: Response) => {
-        console.log(res.json().obj);
+        console.log(res.json());
         const polls = res.json().obj;
+        // console.log("polls", polls);
         let transformPoll: PollModel[] = [];
         for(let p of polls) {
           console.log("Inside get poll service(id)", p._id);
